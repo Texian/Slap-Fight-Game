@@ -1,0 +1,41 @@
+body {
+    background-color: red;
+    flex: auto;
+}
+
+nav {
+    background-color: orange;
+    align-elements: center;
+}
+
+nav li {
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    background-color: green;
+}
+
+#block {
+    float: left;
+    list-style-type: none;
+    background-color: blue;
+    width: 20vw;
+    height: 100vh;
+    text-align: center;
+}
+
+#slap {
+    float: right;
+    list-style-type: none;
+    background-color: purple;
+    width: 20vw;
+    height: 100vh;
+    text-align: center;
+}
