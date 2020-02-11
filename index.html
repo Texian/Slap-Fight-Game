@@ -5,11 +5,12 @@
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/main.js"></script>
     <title>Slap-Off</title>
+    <header><h1>SLAP FIGHT</h1></header>
     <nav>
         <ul id="menu">
-            <li><button>New Game</button></li>
-            <li><button>Rules</button></li>
-            <li><button>Quit</button></li>
+            <li><button id="newGame">New Game</button></li>
+            <li><button id="rules">Rules</button></li>
+            <li><button id="quit">Quit</button></li>
         </ul>
     </nav>
 </head>
@@ -17,19 +18,40 @@
     <div id="block">
         <h2>BLOCK</h2>
         <ul class="moves">
-            <li><button>High</button></li>
-            <li><button>Middle</button></li>
-            <li><button>Low</button></li>
+            <li><button class="high">High</button></li>
+            <li><button class="middle">Middle</button></li>
+            <li><button class="low">Low</button></li>
         </ul>
     </div>
     <div id="slap">
         <h2>SLAP</h2>
         <ul class="moves">
-            <li><button>High</button></li>
-            <li><button>Middle</button></li>
-            <li><button>Low</button></li>
+            <li><button class="high">High</button></li>
+            <li><button class="middle">Middle</button></li>
+            <li><button class="low">Low</button></li>
         </ul>
-    </aside>
+    </div>
+
+    <div id="rulesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>RULES</h3>
+            <p>It's a slapdown!</p>
+            <p>The goal is simple: slap-out your opponent before he slaps you out!</p>
+            <p>Flip a coin to see who slaps first. Then, decide how you're going to attack or block. Beware! The second slapper's first attack is twice as hard!</p>
+            <p>If the attack and block are the same height, the block succeeds. Otherwise, someone's getting slapped into next Tuesday.</p>
+            <p>Be the last slapper standing!</p>
+        </div>
+    </div>
+
+    <div id="coinToss" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>COIN TOSS</h3>
+            <p>Pick your side. Winner goes first, loser gets an extra-strong first attack.</p>
+            <button id="heads">HEADS</button><button id="tails">TAILS</button>
+        </div>
+    </div>
 </body>
 <footer></footer>
 </html>

@@ -1,21 +1,44 @@
 body {
     background-color: red;
     flex: auto;
+    padding: 0;
+    background-image: none;
 }
-
+header {
+    text-align: center;
+}
 nav {
     background-color: orange;
-    align-elements: center;
+    margin: 0;
+    text-align: center;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    
 }
 
 nav li {
+    display: inline-block;
+    width: 20vw;
+}
 
+nav button {
+    border-radius: 15px;
+    width: 80px;
+    height: 30px;
 }
 
 ul {
     list-style-type: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    flex-direction: column;
+}
+
+button {
+    width: 100px;
+    height: 75px;
+    border-radius: 20px;
 }
 
 footer {
@@ -38,4 +61,50 @@ footer {
     width: 20vw;
     height: 100vh;
     text-align: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 35vw;
+    z-index: 1;
+    width: 30vw;
+    height: 50vh;
+    overflow: auto;
+    background-color: rgba(255,255,255,0.4);
+    animation: 1s fadeInOut;
+}
+
+@keyframes fadeInOut {
+    from {
+        background-color: rgba(255,255,255,0.0);
+        color: rgba(0,0,0,0.0)
+    }
+    to {
+        background-color: rgba(255,255,255,0.4);
+        color: rgba(0,0,0,1.0)
+    }
+}
+
+.modal-content {
+    background-color: cadetblue;
+    margin: 5% auto;
+    padding: 15px;
+    border: 1px solid #888;
+    width: 80%;
+    animation: 1s fadeInOut;
+}
+
+.close {
+    color: darkred;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    animation: 1s fadeInOut;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
