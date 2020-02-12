@@ -46,6 +46,9 @@ footer {
 }
 
 #block {
+    transition: all .5s ease-in-out;
+    transform-origin: left top;
+    transform: scaleX(0);
     float: left;
     list-style-type: none;
     background-color: blue;
@@ -55,6 +58,9 @@ footer {
 }
 
 #slap {
+    transition: all .5s ease-in-out;
+    transform-origin: right top;
+    transform: scaleX(0);
     float: right;
     list-style-type: none;
     background-color: purple;
