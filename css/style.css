@@ -9,7 +9,7 @@ header {
 }
 nav {
     background-color: orange;
-    margin: 0;
+    margin: auto;
     text-align: center;
     width: 100vw;
     display: flex;
@@ -75,7 +75,7 @@ footer {
     left: 35vw;
     z-index: 1;
     width: 30vw;
-    height: 50vh;
+    height: 40vh;
     overflow: auto;
     background-color: rgba(255,255,255,0.4);
     animation: 1s fadeInOut;
@@ -87,23 +87,23 @@ footer {
         color: rgba(0,0,0,0.0)
     }
     to {
-        background-color: rgba(255,255,255,0.4);
+        background-color: rgba(255,255,255,0.8);
         color: rgba(0,0,0,1.0)
     }
 }
 
 .modal-content {
-    background-color: cadetblue;
+
     margin: 5% auto;
     padding: 15px;
-    border: 1px solid #888;
     width: 80%;
     animation: 1s fadeInOut;
 }
 
 .close {
     color: darkred;
-    float: right;
+    margin: 12px;
+    justify-self: right;
     font-size: 28px;
     font-weight: bold;
     animation: 1s fadeInOut;
@@ -113,4 +113,11 @@ footer {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+#coinToss .modal-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    animation: 1s fadeInOut;
 }

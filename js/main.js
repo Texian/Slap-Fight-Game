@@ -12,18 +12,22 @@ const cpu = {
 }
 
 //Cached elements
-let newGameBtn = document.getElementById('newGame');
-let rulesBtn = document.getElementById('rules');
-let quitBtn = document.getElementById('quit');
+const newGameBtn = document.getElementById('newGame');
+const rulesBtn = document.getElementById('rules');
+const quitBtn = document.getElementById('quit');
 
-let highBtn = document.getElementsByClassName('high');
-let midBtn = document.getElementsByClassName('mid');
-let lowBtn = document.getElementsByClassName('low');
+const headsBtn = document.getElementById('heads');
+const tailsBtn = document.getElementById('tails');
 
-let rulesModal = document.getElementById('rulesModal');
-let closeBtn = document.getElementsByClassName('close')[0];
-let attackModal = document.getElementById('slap');
-let defendModal = document.getElementById('block');
+const highBtn = document.getElementsByClassName('high');
+const midBtn = document.getElementsByClassName('mid');
+const lowBtn = document.getElementsByClassName('low');
+
+const coinTossModal = document.getElementById('coinToss');
+const rulesModal = document.getElementById('rulesModal');
+const closeBtn = document.getElementsByClassName('close')[0];
+const attackModal = document.getElementById('slap');
+const defendModal = document.getElementById('block');
 
 
 let background = document.body.style.backgroundImage;
@@ -52,21 +56,21 @@ lowBtn[1].addEventListener('click', low);
 //functions
 function mainScreen(){
     //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/titlescreen.png;
+    
     //attack and defend buttons fade out
-    attackModal.style.transform = "transform: scaleX(0)";
-    defendModal.style.transform = "transform: scaleX(0)";
-    newGame();
+    attackModal.style.transform = "scaleX(0)";
+    defendModal.style.transform = "scaleX(0)";
 }
 
 function newGame() {
-    console.log("Button clicked");
+    document.body.style.backgroundColor = "purple";
     player.hp = 5;
     player.move = '';
     cpu.hp = 5;
     cpu.move = '';
     coinChoice = "";
-   //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/main.png;
-    coinToss();
+    coinTossModal.style.display = "block";
+   //doucment.body.style.backgroundImage = www.images.com/main.png; 
 }
 
 //Rules pop up
@@ -84,48 +88,36 @@ function quit() {
     mainScreen();
 }
 
+function heads() {
+    coinChoice = 'heads';
+    console.log(coinChoice);
+    coinToss();
+
+}
+
+function tails() {
+    coinChoice = 'tails';
+    console.log(coinChoice);
+    coinToss();
+}
+
 //coin toss to see who goes first
 function coinToss() {
-    return (Math.floor(Math.random() * 2)=== 0) ? 'heads' : 'tails';
+    console.log("Coin Toss")
+    console.log(coinChoice);
+    coinTossModal.style.display = "none";
+    document.body.style.backgroundColor = "magenta";
+
+    let randomValue = (Math.floor(Math.random() * 2) === 0) ? 'heads' : 'tails';
+    console.log(randomValue);
     //if player wins, go to attack mode; if player loses, go to defense mode
-}
-
-function attack() {
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/attack.png;
-    //slide in attack buttons, slide out defend buttons
-    attackModal.style.transform = "transform: scaleX(1)";
-    defendModal.style.transform = "transform: scaleX(0)";
-    //randomize opponent value
-    //get player value
-    //check for match
-    //if match, go to attack fail bg
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/attackFail.png;
-    //if not a match, go to attack success bg, minus 1hp from opponent
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/attackSuccess.png;
-    //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false' 
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/attack.png;
-    //check opponent hp
-    //if 0, go to win()
-    //if not 0, go to defend()
-}
-
-function defend () {
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/defend.png;
-    //slide in defend buttons, slide out attack buttons
-    attackModal.style.transform = "transform: scaleX(0)";
-    defendModal.style.transform = "transform: scaleX(1)";
-    //randomize opponent value
-    //get player value
-    //check for match
-    //if match, go to defend fail bg, minus 1hp from player
-    //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false'
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/defendFail.png;
-    //if not a match, go to defend success bg
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/defendSuccess.png;
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/defendFail.png;
-    //check player hp
-    //if 0, go to lose()
-    //if not 0, go to attack()
+    if (coinChoice === randomValue) {
+        
+        attack();
+    } else {
+        defend();
+    }
+    
 }
 
 //Selects high attack or block
@@ -147,60 +139,67 @@ function low() {
     console.log(player.move);
 }
 
+//Randomizes opponent's move
+function randomize() {
+
+}
+
+function attack() {
+    console.log("Attack");
+    document.body.style.backgroundColor = "darkred";
+    //doucment.body.style.backgroundImage = www.images.com/attack.png;
+    //slide in attack buttons, slide out defend buttons
+    attackModal.style.transform = "scaleX(1)";
+    defendModal.style.transform = "scaleX(0)";
+    //randomize opponent value
+    //get player value
+    //check for match
+    //if match, go to attack fail bg
+    //doucment.body.style.backgroundImage = www.images.com/attackFail.png;
+    //if not a match, go to attack success bg, minus 1hp from opponent
+    //doucment.body.style.backgroundImage = www.images.com/attackSuccess.png;
+    //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false' 
+    //doucment.body.style.backgroundImage = www.images.com/attack.png;
+    //check opponent hp
+    //if 0, go to win()
+    //if not 0, go to defend()
+}
+
+function defend () {
+    console.log("Defend");
+    document.body.style.backgroundColor = "darkblue";
+    //doucment.body.style.backgroundImage = www.images.com/defend.png;
+    //slide in defend buttons, slide out attack buttons
+    attackModal.style.transform = "scaleX(0)";
+    defendModal.style.transform = "scaleX(1)";
+    //randomize opponent value
+    //get player value
+    //check for match
+    //if match, go to defend fail bg, minus 1hp from player
+    //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false'
+    //doucment.body.style.backgroundImage = www.images.com/defendFail.png;
+    //if not a match, go to defend success bg
+    //doucment.body.style.backgroundImage = www.images.com/defendSuccess.png;
+    //check player hp
+    //if 0, go to lose()
+    //if not 0, go to attack()
+}
+
+
 function win() {
-    attackModal.style.transform = "transform: scaleX(1)";
-    defendModal.style.transform = "transform: scaleX(0)";
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/win.png;
+    console.log("Win");
+    document.body.style.backgroundColor = "pink";
+    attackModal.style.transform = "scaleX(1)";
+    defendModal.style.transform = "scaleX(0)";
+    //doucment.body.style.backgroundImage = www.images.com/win.png;
 }
 
 function loss() {
-    attackModal.style.transform = "transform: scaleX(1)";
-    defendModal.style.transform = "transform: scaleX(0)";
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/loss.png;
+    console.log("Loss");
+    document.body.style.backgroundColor = "grey";
+    attackModal.style.transform = "scaleX(1)";
+    defendModal.style.transform = "scaleX(0)";
+    //doucment.body.style.backgroundImage = www.images.com/loss.png;
 }
 
 mainScreen();
-
-if (coinChoice === coinToss){
-    attack();
-} else {
-    defend ();
-}
-//main screen
-//display main background, no side buttons
-//New Game starts game logic
-//Quit resets to main screen
-
-
-//coin flip
-//player selects heads or tails
-//coin flips
-//win, player attacks first; loss, player defends first
-
-//attack screen
-//buttons on left fade out
-//buttons on right fade in
-//background switches to attack
-//cpu selects random defense option
-//player clicks attack option
-//if successful attack: background switches to successful attack, opponent loses 1hp
-//if failed attack: background switches to failed attack
-//checks for 0hp on opponent: if false, moves to defend screen; if true, moves to win screen
-
-//defend screen
-//buttons on right fade out
-//buttons on left fade in
-//background switches to defend
-//cpu selects random attack option
-//player clicks defense option
-//if successful defense, background switches to succesful defense
-//if failed defense, background switches to failed defense, player loses 1hp
-//checks for 0hp on player: if false, moves to attack screen; if true, moves to lose screen
-
-//win screen
-//background switches to win
-//gives player option to play again
-
-//loss screen
-//background switches to loss
-//gives player option to play again
