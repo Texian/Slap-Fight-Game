@@ -17,6 +17,9 @@ const rulesBtn = document.getElementById('rules');
 const quitBtn = document.getElementById('quit');
 const rulesModal = document.getElementById('rulesModal');
 const closeBtn = document.getElementsByClassName('close');
+const yesBtn = document.getElementById('yes');
+const noBtn = document.getElementById('no');
+const playAgainModal = document.getElementById('playAgainModal');
 
 const coinTossModal = document.getElementById('coinToss');
 const headsBtn = document.getElementById('heads');
@@ -33,8 +36,10 @@ const defendModal = document.getElementById('block');
 let background = document.body.style.backgroundImage;
 
 //Coin Toss
-let coinChoice = "";
+let coinChoice = '';
 let doubleDamage = true;
+
+let round = '';
 
 //Event listeners
 newGameBtn.addEventListener('click', newGame);
@@ -43,10 +48,13 @@ closeBtn[0].addEventListener('click', close);
 closeBtn[1].addEventListener('click', close);
 closeBtn[2].addEventListener('click', close);
 quitBtn.addEventListener('click', quit);
+yesBtn.addEventListener('click', newGame);
+noBtn.addEventListener('click', mainScreen);
 
 headsBtn.addEventListener('click', heads);
 tailsBtn.addEventListener('click', tails);
 
+//0 = defend, 1 = attack
 highBtn[0].addEventListener('click', high);
 midBtn[0].addEventListener('click', mid);
 lowBtn[0].addEventListener('click', low);
@@ -75,6 +83,8 @@ function closeModals () {
     coinTossLoseModal.style.display = "none";
 
     rulesModal.style.display = "none";
+
+    playAgainModal.style.display = "none";
 }
 
 //Rules pop up
@@ -104,6 +114,7 @@ function newGame() {
     player.move = '';
     cpu.hp = 5;
     cpu.move = '';
+    doubleDamage = true;
     coinChoice = "";
     coinTossModal.style.display = "block";
    //background = www.images.com/main.png; 
@@ -127,7 +138,7 @@ function tails() {
 function coinToss() {
     console.log("Coin Toss")
     console.log(coinChoice);
-    coinTossModal.style.display = "none";
+    coinTossModal.style.display = "block";
     document.body.style.backgroundColor = "magenta";
 
     let randomValue = (Math.floor(Math.random() * 2) === 0) ? 'heads' : 'tails';
@@ -135,31 +146,44 @@ function coinToss() {
     //if player wins, go to attack mode; if player loses, go to defense mode
     if (coinChoice === randomValue) {       
         coinTossWinModal.style.display = "block";
+        round = 'attack'
         attack();
     } else {
         coinTossLoseModal.style.display = "block";
+        round = 'defend'
         defend();
     }
     
 }
-
+function whichMode() {
+    coinTossWinModal.style.display = "none";
+    coinTossLoseModal.style.display = "none";
+    if (round === 'attack') {
+        attackResolve();
+    } else if (round === 'defend') {
+        defendResolve();
+    }
+} 
 //Selects high attack or block
 function high() {
-    console.log("Button clicked");
+    console.log("High Button clicked");
     player.move = "high";
-    console.log(player.move);
+    console.log(`Player move: ${player.move}`);
+    whichMode();
 }
 //Selects mid attack or block
 function mid() {
-    console.log("Button clicked");
+    console.log("Mid Button clicked");
     player.move = "mid";
-    console.log(player.move);
+    console.log(`Player move: ${player.move}`);
+    whichMode();
 }
 //Selects low attack or block
 function low() {
-    console.log("Button clicked");
+    console.log("Low Button clicked");
     player.move = "low";
-    console.log(player.move);
+    console.log(`Player move: ${player.move}`);
+    whichMode();
 }
 
 //Randomizes opponent's move
@@ -171,78 +195,131 @@ function randomizer(min, max) {
 
 //Assigns random move
 function cpuMove() {
-    cpuMove = randomizer(0, 2);
+    console.log("Randomizing opponent")
+    cpuMoveVar = randomizer(0, 2);
     
-    if (cpuMove === 0){
+    if (cpuMoveVar === 0){
         cpu.move = "high";
-    } else if (cpuMove === 1) {
+    } else if (cpuMoveVar === 1) {
         cpu.move = "mid";
-    } else if (cpuMove === 2) {
+    } else if (cpuMoveVar === 2) {
         cpu.move = "low";
     }
+    console.log(cpuMoveVar);
+    console.log(`CPU move: ${cpu.move}`);
 }
-cpuMove();
+
 function moveReset () {
     cpu.move = '';
     player.move = '';
 }
 
 function attack() {
+    moveReset();
+    cpuMove();
     console.log("Attack");
+    console.log(cpu.move, player.move);
     document.body.style.backgroundColor = "darkred";
     //background = www.images.com/attack.png;
     //slide in attack buttons, slide out defend buttons
     attackModal.style.transform = "scaleX(1)";
     defendModal.style.transform = "scaleX(0)";
-    //randomize opponent value
-    //get player value
-    //check for match
-    //if match, go to attack fail bg
-    //background = www.images.com/attackFail.png;
-    //if not a match, go to attack success bg, minus 1hp from opponent
-    //background = www.images.com/attackSuccess.png;
-    //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false' 
+}
+ 
+function attackResolve(){
+
+    if (cpu.move === player.move){
+        console.log(cpu.move, player.move);
+        console.log("Attack blocked");
+        //background = www.images.com / attackFail.png;
+    } else if ((cpu.move !== player.move) && doubleDamage === true){
+        console.log(cpu.move, player.move);
+        console.log("Attack super successful!")
+        //background = www.images.com / attackSuccess.png;
+        cpu.hp = cpu.hp -2;
+        doubleDamage = false;
+    } else {
+        console.log(cpu.move, player.move);
+        console.log("Attack successful")
+        //background = www.images.com / attackSuccess.png;
+        cpu.hp = cpu.hp - 1;
+    }
+
     //background = www.images.com/attack.png;
-    //check opponent hp
-    //if 0, go to win()
-    //if not 0, go to defend()
+    
+    if (cpu.hp === 0) {
+        console.log(`${player.hp}, ${cpu.hp}`);
+        win();
+    } else {
+        console.log(`${player.hp}, ${cpu.hp}`);
+        round = 'defend';
+        defend();
+    }
 }
 
-function defend () {
+function defend() {
+    moveReset();
+    cpuMove();
     console.log("Defend");
+    console.log(cpu.move, player.move);
     document.body.style.backgroundColor = "darkblue";
     //background = www.images.com/defend.png;
     //slide in defend buttons, slide out attack buttons
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(1)";
-    //randomize opponent value
-    //get player value
+}
+
+function defendResolve() {
+
     //check for match
     //if match, go to defend fail bg, minus 1hp from player
     //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false'
-    //background = www.images.com/defendFail.png;
-    //if not a match, go to defend success bg
-    //background = www.images.com/defendSuccess.png;
-    //check player hp
-    //if 0, go to lose()
-    //if not 0, go to attack()
+    if (cpu.move === player.move) {
+        console.log(cpu.move, player.move);
+        console.log("Block successful");
+        //background = www.images.com / defendSuccess.png;
+    } else if ((cpu.move !== player.move) && doubleDamage === true) {
+        console.log(cpu.move, player.move);
+        console.log("Block drastically failed!");
+        //background = www.images.com / defendFail.png;
+        player.hp = player.hp - 2;
+        doubleDamage = false;
+    } else {
+        console.log(cpu.move, player.move);
+        console.log("Block failed");
+        //background = www.images.com / defendFail.png;
+        player.hp = player.hp - 1;
+    }
+
+    //background = www.images.com/defend.png;
+
+    if (player.hp === 0) {
+        console.log(`${player.hp}, ${cpu.hp}`);
+        lose();
+    } else {
+        console.log(`${player.hp}, ${cpu.hp}`);
+        round = 'attack';
+        attack();
+    }
 }
 
 
 function win() {
     console.log("Win");
     document.body.style.backgroundColor = "pink";
-    attackModal.style.transform = "scaleX(1)";
+    attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(0)";
     //background = www.images.com/win.png;
+    playAgainModal.style.display = "block";
 }
 
-function loss() {
+function lose() {
     console.log("Loss");
     document.body.style.backgroundColor = "grey";
-    attackModal.style.transform = "scaleX(1)";
+    attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(0)";
     //background = www.images.com/loss.png;
+    playAgainModal.style.display = "block";
 }
 
 //mainScreen();

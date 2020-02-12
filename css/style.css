@@ -82,7 +82,11 @@ footer {
     height: 40vh;
     overflow: auto;
     background-color: rgba(255,255,255,0.8);
-    animation: 1s fadeInOut;
+    /* animation: 1s fadeInOut; */
+    transition: all .5s ease-in-out;
+    transform-origin: top;
+    transform: scaleY(0);
+    float: right;
 }
 
 @keyframes fadeInOut {
@@ -120,6 +124,17 @@ footer {
 }
 
 #coinToss .modal-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* animation: 1s fadeInOut; */
+    transition: all .5s ease-in-out;
+    transform-origin: right top;
+    transform: scaleX(0);
+    float: right;
+}
+
+#playAgainModal .modal-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
