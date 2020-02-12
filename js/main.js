@@ -17,7 +17,6 @@ const rulesBtn = document.getElementById('rules');
 const quitBtn = document.getElementById('quit');
 const rulesModal = document.getElementById('rulesModal');
 const closeBtn = document.getElementsByClassName('close');
-console.log(closeBtn);
 
 const coinTossModal = document.getElementById('coinToss');
 const headsBtn = document.getElementById('heads');
@@ -30,11 +29,6 @@ const midBtn = document.getElementsByClassName('mid');
 const lowBtn = document.getElementsByClassName('low');
 const attackModal = document.getElementById('slap');
 const defendModal = document.getElementById('block');
-
-
-
-
-
 
 let background = document.body.style.backgroundImage;
 
@@ -61,13 +55,17 @@ midBtn[1].addEventListener('click', mid);
 lowBtn[1].addEventListener('click', low);
 
 
-//functions
+//FUNCTIONS
+
+//Title screen
 function mainScreen(){
+    document.body.style.backgroundColor = "white";
     //background = www.images.com/titlescreen.png;
     //attack and defend buttons fade out, modal windows gone
     closeModals()
 }
 
+//Closes all modals
 function closeModals () {
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(0)";
@@ -79,6 +77,26 @@ function closeModals () {
     rulesModal.style.display = "none";
 }
 
+//Rules pop up
+function rules() {
+    rulesModal.style.display = "block";
+}
+
+//Closes individual modals
+function close() {
+    rulesModal.style.display = "none";
+    coinTossWinModal.style.display = "none";
+    coinTossLoseModal.style.display = "none";
+    console.log("close clicked");
+}
+
+//Quits game and returns to main screen
+function quit() {
+    console.log("Button clicked");
+    mainScreen();
+}
+
+//Starts new game, resets variables to defaults, brings up coin toss
 function newGame() {
     document.body.style.backgroundColor = "purple";
     closeModals();
@@ -91,37 +109,21 @@ function newGame() {
    //background = www.images.com/main.png; 
 }
 
-//Rules pop up
-function rules() {
-    rulesModal.style.display = "block";
-}
-//Closes rules pop up
-function close() {
-    rulesModal.style.display = "none";
-    coinTossWinModal.style.display = "none";
-    coinTossLoseModal.style.display = "none";
-    console.log("close clicked");
-}
-//Quits game and returns to main screen
-
-function quit() {
-    console.log("Button clicked");
-    mainScreen();
-}
-
+//Coin toss heads option
 function heads() {
     coinChoice = 'heads';
     console.log(coinChoice);
     coinToss();
 }
 
+//Coin toss tails option
 function tails() {
     coinChoice = 'tails';
     console.log(coinChoice);
     coinToss();
 }
 
-//coin toss to see who goes first
+//Coin toss results to see who goes first
 function coinToss() {
     console.log("Coin Toss")
     console.log(coinChoice);
@@ -161,8 +163,28 @@ function low() {
 }
 
 //Randomizes opponent's move
-function randomize() {
+function randomizer(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+//Assigns random move
+function cpuMove() {
+    cpuMove = randomizer(0, 2);
+    
+    if (cpuMove === 0){
+        cpu.move = "high";
+    } else if (cpuMove === 1) {
+        cpu.move = "mid";
+    } else if (cpuMove === 2) {
+        cpu.move = "low";
+    }
+}
+cpuMove();
+function moveReset () {
+    cpu.move = '';
+    player.move = '';
 }
 
 function attack() {
@@ -223,4 +245,4 @@ function loss() {
     //background = www.images.com/loss.png;
 }
 
-mainScreen();
+//mainScreen();
