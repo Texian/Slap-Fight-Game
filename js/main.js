@@ -15,19 +15,25 @@ const cpu = {
 const newGameBtn = document.getElementById('newGame');
 const rulesBtn = document.getElementById('rules');
 const quitBtn = document.getElementById('quit');
+const rulesModal = document.getElementById('rulesModal');
+const closeBtn = document.getElementsByClassName('close');
+console.log(closeBtn);
 
+const coinTossModal = document.getElementById('coinToss');
 const headsBtn = document.getElementById('heads');
 const tailsBtn = document.getElementById('tails');
+const coinTossWinModal = document.getElementById('coinTossWinModal');
+const coinTossLoseModal = document.getElementById('coinTossLoseModal');
 
 const highBtn = document.getElementsByClassName('high');
 const midBtn = document.getElementsByClassName('mid');
 const lowBtn = document.getElementsByClassName('low');
-
-const coinTossModal = document.getElementById('coinToss');
-const rulesModal = document.getElementById('rulesModal');
-const closeBtn = document.getElementsByClassName('close')[0];
 const attackModal = document.getElementById('slap');
 const defendModal = document.getElementById('block');
+
+
+
+
 
 
 let background = document.body.style.backgroundImage;
@@ -39,7 +45,9 @@ let doubleDamage = true;
 //Event listeners
 newGameBtn.addEventListener('click', newGame);
 rulesBtn.addEventListener('click', rules);
-closeBtn.addEventListener('click', close);
+closeBtn[0].addEventListener('click', close);
+closeBtn[1].addEventListener('click', close);
+closeBtn[2].addEventListener('click', close);
 quitBtn.addEventListener('click', quit);
 
 headsBtn.addEventListener('click', heads);
@@ -55,22 +63,32 @@ lowBtn[1].addEventListener('click', low);
 
 //functions
 function mainScreen(){
-    //doucment.getElementByTagName("body").style.backgroundImage = www.images.com/titlescreen.png;
-    
-    //attack and defend buttons fade out
+    //background = www.images.com/titlescreen.png;
+    //attack and defend buttons fade out, modal windows gone
+    closeModals()
+}
+
+function closeModals () {
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(0)";
+
+    coinTossModal.style.display = "none";
+    coinTossWinModal.style.display = "none";
+    coinTossLoseModal.style.display = "none";
+
+    rulesModal.style.display = "none";
 }
 
 function newGame() {
     document.body.style.backgroundColor = "purple";
+    closeModals();
     player.hp = 5;
     player.move = '';
     cpu.hp = 5;
     cpu.move = '';
     coinChoice = "";
     coinTossModal.style.display = "block";
-   //doucment.body.style.backgroundImage = www.images.com/main.png; 
+   //background = www.images.com/main.png; 
 }
 
 //Rules pop up
@@ -80,6 +98,9 @@ function rules() {
 //Closes rules pop up
 function close() {
     rulesModal.style.display = "none";
+    coinTossWinModal.style.display = "none";
+    coinTossLoseModal.style.display = "none";
+    console.log("close clicked");
 }
 //Quits game and returns to main screen
 
@@ -92,7 +113,6 @@ function heads() {
     coinChoice = 'heads';
     console.log(coinChoice);
     coinToss();
-
 }
 
 function tails() {
@@ -111,10 +131,11 @@ function coinToss() {
     let randomValue = (Math.floor(Math.random() * 2) === 0) ? 'heads' : 'tails';
     console.log(randomValue);
     //if player wins, go to attack mode; if player loses, go to defense mode
-    if (coinChoice === randomValue) {
-        
+    if (coinChoice === randomValue) {       
+        coinTossWinModal.style.display = "block";
         attack();
     } else {
+        coinTossLoseModal.style.display = "block";
         defend();
     }
     
@@ -147,7 +168,7 @@ function randomize() {
 function attack() {
     console.log("Attack");
     document.body.style.backgroundColor = "darkred";
-    //doucment.body.style.backgroundImage = www.images.com/attack.png;
+    //background = www.images.com/attack.png;
     //slide in attack buttons, slide out defend buttons
     attackModal.style.transform = "scaleX(1)";
     defendModal.style.transform = "scaleX(0)";
@@ -155,11 +176,11 @@ function attack() {
     //get player value
     //check for match
     //if match, go to attack fail bg
-    //doucment.body.style.backgroundImage = www.images.com/attackFail.png;
+    //background = www.images.com/attackFail.png;
     //if not a match, go to attack success bg, minus 1hp from opponent
-    //doucment.body.style.backgroundImage = www.images.com/attackSuccess.png;
+    //background = www.images.com/attackSuccess.png;
     //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false' 
-    //doucment.body.style.backgroundImage = www.images.com/attack.png;
+    //background = www.images.com/attack.png;
     //check opponent hp
     //if 0, go to win()
     //if not 0, go to defend()
@@ -168,7 +189,7 @@ function attack() {
 function defend () {
     console.log("Defend");
     document.body.style.backgroundColor = "darkblue";
-    //doucment.body.style.backgroundImage = www.images.com/defend.png;
+    //background = www.images.com/defend.png;
     //slide in defend buttons, slide out attack buttons
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(1)";
@@ -177,9 +198,9 @@ function defend () {
     //check for match
     //if match, go to defend fail bg, minus 1hp from player
     //check doubleDamage; if 'true', minus 2hp instead of 1 and flip to 'false'
-    //doucment.body.style.backgroundImage = www.images.com/defendFail.png;
+    //background = www.images.com/defendFail.png;
     //if not a match, go to defend success bg
-    //doucment.body.style.backgroundImage = www.images.com/defendSuccess.png;
+    //background = www.images.com/defendSuccess.png;
     //check player hp
     //if 0, go to lose()
     //if not 0, go to attack()
@@ -191,7 +212,7 @@ function win() {
     document.body.style.backgroundColor = "pink";
     attackModal.style.transform = "scaleX(1)";
     defendModal.style.transform = "scaleX(0)";
-    //doucment.body.style.backgroundImage = www.images.com/win.png;
+    //background = www.images.com/win.png;
 }
 
 function loss() {
@@ -199,7 +220,7 @@ function loss() {
     document.body.style.backgroundColor = "grey";
     attackModal.style.transform = "scaleX(1)";
     defendModal.style.transform = "scaleX(0)";
-    //doucment.body.style.backgroundImage = www.images.com/loss.png;
+    //background = www.images.com/loss.png;
 }
 
 mainScreen();
