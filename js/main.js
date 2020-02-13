@@ -11,6 +11,15 @@ const cpu = {
     move:''
 }
 
+const healthBarValues = {
+    '0': '190px',
+    '1': '152px',
+    '2': '114px',
+    '3': '76px',
+    '4': '38px',
+    '5': '0'
+}
+
 //Cached elements
 const newGameBtn = document.getElementById('newGame');
 const rulesBtn = document.getElementById('rules');
@@ -32,8 +41,8 @@ const midBtn = document.getElementsByClassName('mid');
 const lowBtn = document.getElementsByClassName('low');
 const attackModal = document.getElementById('slap');
 const defendModal = document.getElementById('block');
-
-let background = document.body.style.backgroundImage;
+const playerHealth = document.querySelector('#playerHealth .bar .hit');
+const cpuHealth = document.querySelector('#cpuHealth .bar .hit');
 
 //Coin Toss
 let coinChoice = '';
@@ -69,8 +78,8 @@ lowBtn[1].addEventListener('click', low);
 
 //Title screen
 function mainScreen(){
-    document.body.style.backgroundColor = "white";
-    //background = www.images.com/titlescreen.png;
+    
+    document.body.style.backgroundImage = "url('../images/TitleScreen.png')";
     //attack and defend buttons fade out, modal windows gone
     closeModals()
 }
@@ -119,7 +128,14 @@ function newGame() {
     doubleDamage = true;
     coinChoice = "";
     coinTossModal.style.display = "block";
+    healthBars();
    //background = www.images.com/main.png; 
+    document.body.style.backgroundImage = "url('../images/TitleScreen.png')";
+}
+
+function healthBars() {
+    playerHealth.style.width = healthBarValues[player.hp.toString()];
+    cpuHealth.style.width = healthBarValues[cpu.hp.toString()];
 }
 
 //Coin toss heads option
@@ -229,6 +245,7 @@ function attack() {
     //slide in attack buttons, slide out defend buttons
     attackModal.style.transform = "scaleX(1)";
     defendModal.style.transform = "scaleX(0)";
+    document.body.style.backgroundImage = "url('../images/Attack.png')";
 }
  
 function attackResolve(){
@@ -236,23 +253,24 @@ function attackResolve(){
     if (cpu.move === player.move){
         console.log(cpu.move, player.move);
         console.log("Attack blocked");
-        //background = www.images.com / attackFail.png;
+        document.body.style.backgroundImage = "url('../images/AttackFail.png')";
     } else {
         console.log(cpu.move, player.move);
         console.log("Attack successful")
         //background = www.images.com / attackSuccess.png;
         cpu.hp = cpu.hp - 1;
+        healthBars();
     }
     console.log(`${player.hp}, ${cpu.hp}`);
     //background = www.images.com/attack.png;
     
     if (cpu.hp === 0) {
-        win();
+        setTimeout(win, 2000); 
     } else if (roundNumber === 2){
-        attack();
+        setTimeout(attack, 2000);  
     } else {
         round = 'defend';
-        defend();
+        setTimeout(defend, 2000);
     }
 }
 
@@ -266,6 +284,7 @@ function defend() {
     //slide in defend buttons, slide out attack buttons
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(1)";
+    document.body.style.backgroundImage = "url('../images/Attack.png')";
 }
 
 function defendResolve() {
@@ -282,6 +301,7 @@ function defendResolve() {
         console.log("Block failed");
         //background = www.images.com / defendFail.png;
         player.hp = player.hp - 1;
+        healthBars();
     }
     console.log(`${player.hp}, ${cpu.hp}`);
     //background = www.images.com/defend.png;
