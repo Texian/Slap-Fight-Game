@@ -40,6 +40,8 @@ let coinChoice = '';
 let doubleDamage = true;
 
 let round = '';
+let roundNumber = 0;
+
 
 //Event listeners
 newGameBtn.addEventListener('click', newGame);
@@ -145,10 +147,12 @@ function coinToss() {
     console.log(randomValue);
     //if player wins, go to attack mode; if player loses, go to defense mode
     if (coinChoice === randomValue) {       
+        coinTossModal.style.display = "none";
         coinTossWinModal.style.display = "block";
         round = 'attack'
         attack();
     } else {
+        coinTossModal.style.display = "none";
         coinTossLoseModal.style.display = "block";
         round = 'defend'
         defend();
@@ -212,6 +216,7 @@ function cpuMove() {
 function moveReset () {
     cpu.move = '';
     player.move = '';
+    roundNumber++;
 }
 
 function attack() {
@@ -232,26 +237,20 @@ function attackResolve(){
         console.log(cpu.move, player.move);
         console.log("Attack blocked");
         //background = www.images.com / attackFail.png;
-    } else if ((cpu.move !== player.move) && doubleDamage === true){
-        console.log(cpu.move, player.move);
-        console.log("Attack super successful!")
-        //background = www.images.com / attackSuccess.png;
-        cpu.hp = cpu.hp -2;
-        doubleDamage = false;
     } else {
         console.log(cpu.move, player.move);
         console.log("Attack successful")
         //background = www.images.com / attackSuccess.png;
         cpu.hp = cpu.hp - 1;
     }
-
+    console.log(`${player.hp}, ${cpu.hp}`);
     //background = www.images.com/attack.png;
     
     if (cpu.hp === 0) {
-        console.log(`${player.hp}, ${cpu.hp}`);
         win();
+    } else if (roundNumber === 2){
+        attack();
     } else {
-        console.log(`${player.hp}, ${cpu.hp}`);
         round = 'defend';
         defend();
     }
@@ -278,26 +277,20 @@ function defendResolve() {
         console.log(cpu.move, player.move);
         console.log("Block successful");
         //background = www.images.com / defendSuccess.png;
-    } else if ((cpu.move !== player.move) && doubleDamage === true) {
-        console.log(cpu.move, player.move);
-        console.log("Block drastically failed!");
-        //background = www.images.com / defendFail.png;
-        player.hp = player.hp - 2;
-        doubleDamage = false;
     } else {
         console.log(cpu.move, player.move);
         console.log("Block failed");
         //background = www.images.com / defendFail.png;
         player.hp = player.hp - 1;
     }
-
+    console.log(`${player.hp}, ${cpu.hp}`);
     //background = www.images.com/defend.png;
 
-    if (player.hp === 0) {
-        console.log(`${player.hp}, ${cpu.hp}`);
+    if (player.hp === 0) {      
         lose();
+    } else if (roundNumber === 2){
+        defend();
     } else {
-        console.log(`${player.hp}, ${cpu.hp}`);
         round = 'attack';
         attack();
     }

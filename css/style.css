@@ -2,6 +2,7 @@ body {
     background-color: red;
     flex: auto;
     padding: 0;
+    margin: 0;
     background-image: none;
 }
 header {
@@ -82,11 +83,7 @@ footer {
     height: 40vh;
     overflow: auto;
     background-color: rgba(255,255,255,0.8);
-    /* animation: 1s fadeInOut; */
-    transition: all .5s ease-in-out;
-    transform-origin: top;
-    transform: scaleY(0);
-    float: right;
+    animation: 1s fadeInOut;
 }
 
 @keyframes fadeInOut {
@@ -123,15 +120,17 @@ footer {
     cursor: pointer;
 }
 
+#rulesModal .modal-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    animation: 1s fadeInOut;
+}
 #coinToss .modal-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    /* animation: 1s fadeInOut; */
-    transition: all .5s ease-in-out;
-    transform-origin: right top;
-    transform: scaleX(0);
-    float: right;
+    animation: 1s fadeInOut;
 }
 
 #playAgainModal .modal-content {
