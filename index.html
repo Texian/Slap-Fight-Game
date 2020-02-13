@@ -15,6 +15,20 @@
     </nav>
 </head>
 <body>
+    <div class="healthBars">
+        <span class="label" id="player">Player</span><span class="label" id="cpu">CPU</span>
+        <div class="break"></div>
+        <div id="playerHealth" class="health-bar" data-total="5" data-value="5">
+            <div class="bar">
+                <div class="hit"></div>
+            </div>
+        </div>
+        <div id="cpuHealth" class="health-bar" data-total="5" data-value="5">
+            <div class="bar">
+                <div class="hit"></div>
+            </div>
+        </div>
+    </div>
     <div id="block">
         <h2>BLOCK</h2>
         <ul class="moves">
@@ -68,6 +82,7 @@
     <div id="playAgainModal" class="modal">
         <div class="modal-content">
             <h3>Play Again?</h3>
+            <div class="break"></div>
             <button id="yes">YES</button><button id="no">NO</button>
         </div>
     </div>
