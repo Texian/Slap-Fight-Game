@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/main.js"></script>
     <title>Slap-Off</title>
-    <header><h1>SLAP FIGHT</h1></header>
+    <!-- <header><h1>SLAP FIGHT</h1></header> -->
 </head>
 <body>
     <!-- <div class="padding">        -->
@@ -17,9 +17,8 @@
             </ul>
         </nav>
        
-
-        <div class="healthBars">
-            <div id=#playerBox>
+        <div id="healthBars">
+            <div id="playerBox">
             <span class="label" id="player">Player</span>
                 <div id="playerHealth" class="health-bar" data-total="5" data-value="5">
                     <div class="bar">
@@ -28,7 +27,7 @@
                 </div>
             </div>
             <div id="cpuBox">
-            <span class="label" id="cpu" align-text: right>CPU</span>
+            <span class="label" id="cpu">CPU</span>
                 <div id="cpuHealth" class="health-bar" data-total="5" data-value="5">
                     <div class="bar">
                         <div class="hit"></div>
@@ -69,8 +68,8 @@
     <div id="coinToss" class="modal">
         <div class="modal-content">
             <h3>COIN TOSS</h3>
-            <p>Pick your side. Winner goes first, loser gets an extra-strong first attack.</p>
-            <button id="heads">HEADS</button><button id="tails">TAILS</button>
+            <p>Pick your side. Winner goes first, loser gets an extra first attack.</p>
+            <div class="buttons"><button id="heads">HEADS</button><button id="tails">TAILS</button></div>
         </div>
     </div>
     <div id="coinTossWinModal" class="modal">
@@ -84,14 +83,14 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>You Lose the Coin Toss!</h3>
-            <p>You have to defend first...but you get to do two attacks in a row!</p>
+            <p>You have to defend first...but you get two attacks in a row!</p>
         </div>
     </div>
     <div id="playAgainModal" class="modal">
         <div class="modal-content">
             <h3>Play Again?</h3>
             <div class="break"></div>
-            <button id="yes">YES</button><button id="no">NO</button>
+            <div class="buttons"><button id="yes">YES</button><button id="no">NO</button></div>
         </div>
     </div>
 </body>

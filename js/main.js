@@ -29,6 +29,7 @@ const closeBtn = document.getElementsByClassName('close');
 const yesBtn = document.getElementById('yes');
 const noBtn = document.getElementById('no');
 const playAgainModal = document.getElementById('playAgainModal');
+const menuModal = document.getElementById('menu');
 
 const coinTossModal = document.getElementById('coinToss');
 const headsBtn = document.getElementById('heads');
@@ -43,6 +44,10 @@ const attackModal = document.getElementById('slap');
 const defendModal = document.getElementById('block');
 const playerHealth = document.querySelector('#playerHealth .bar .hit');
 const cpuHealth = document.querySelector('#cpuHealth .bar .hit');
+const playerBoxModal = document.getElementById('playerBox');
+const cpuBoxModal = document.getElementById('cpuBox');
+const healthBarsModal = document.getElementById('healthBars');
+
 
 //Coin Toss
 let coinChoice = '';
@@ -78,7 +83,6 @@ lowBtn[1].addEventListener('click', low);
 
 //Title screen
 function mainScreen(){
-    
     document.body.style.backgroundImage = "url('../images/TitleScreen.png')";
     //attack and defend buttons fade out, modal windows gone
     closeModals()
@@ -96,6 +100,9 @@ function closeModals () {
     rulesModal.style.display = "none";
 
     playAgainModal.style.display = "none";
+    playerBoxModal.style.transform = "scaleX(0)";
+    cpuBoxModal.style.transform = "scaleX(0)";
+    // healthBarsModal.style.display = "none";
 }
 
 //Rules pop up
@@ -121,6 +128,10 @@ function quit() {
 function newGame() {
     document.body.style.backgroundColor = "purple";
     closeModals();
+    menuModal.style.transform = "scaleY(0)";
+    playerBoxModal.style.transform = "scaleX(1)";
+    cpuBoxModal.style.transform = "scaleX(1)";
+    // healthBarsModal.style.display = "flex";
     player.hp = 5;
     player.move = '';
     cpu.hp = 5;
@@ -129,7 +140,6 @@ function newGame() {
     coinChoice = "";
     coinTossModal.style.display = "block";
     healthBars();
-   //background = www.images.com/main.png; 
     document.body.style.backgroundImage = "url('../images/TitleScreen.png')";
 }
 
@@ -245,7 +255,7 @@ function attack() {
     //slide in attack buttons, slide out defend buttons
     attackModal.style.transform = "scaleX(1)";
     defendModal.style.transform = "scaleX(0)";
-    document.body.style.backgroundImage = "url('../images/Attack.png')";
+    document.body.style.backgroundImage = "url('../images/AttackScreen.png')";
 }
  
 function attackResolve(){
@@ -253,11 +263,11 @@ function attackResolve(){
     if (cpu.move === player.move){
         console.log(cpu.move, player.move);
         console.log("Attack blocked");
-        document.body.style.backgroundImage = "url('../images/AttackFail.png')";
+        document.body.style.backgroundImage = "url('../images/AttackFailScreen.png')";
     } else {
         console.log(cpu.move, player.move);
         console.log("Attack successful")
-        //background = www.images.com / attackSuccess.png;
+        document.body.style.backgroundImage = "url('../images/AttackSucceedScreen.png')";
         cpu.hp = cpu.hp - 1;
         healthBars();
     }
@@ -265,12 +275,15 @@ function attackResolve(){
     //background = www.images.com/attack.png;
     
     if (cpu.hp === 0) {
-        setTimeout(win, 2000); 
+        attackModal.style.transform = "scaleX(0)";
+        setTimeout(win, 1500); 
     } else if (roundNumber === 2){
-        setTimeout(attack, 2000);  
+        attackModal.style.transform = "scaleX(0)";
+        setTimeout(attack, 1500);  
     } else {
+        attackModal.style.transform = "scaleX(0)";
         round = 'defend';
-        setTimeout(defend, 2000);
+        setTimeout(defend, 1500);
     }
 }
 
@@ -284,7 +297,7 @@ function defend() {
     //slide in defend buttons, slide out attack buttons
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(1)";
-    document.body.style.backgroundImage = "url('../images/Attack.png')";
+    document.body.style.backgroundImage = "url('../images/DefendScreen.png')";
 }
 
 function defendResolve() {
@@ -295,11 +308,11 @@ function defendResolve() {
     if (cpu.move === player.move) {
         console.log(cpu.move, player.move);
         console.log("Block successful");
-        //background = www.images.com / defendSuccess.png;
+        document.body.style.backgroundImage = "url('../images/DefendSucceedScreen.png')";
     } else {
         console.log(cpu.move, player.move);
         console.log("Block failed");
-        //background = www.images.com / defendFail.png;
+        document.body.style.backgroundImage = "url('../images/DefendFailScreenScreen.png')";
         player.hp = player.hp - 1;
         healthBars();
     }
@@ -307,12 +320,15 @@ function defendResolve() {
     //background = www.images.com/defend.png;
 
     if (player.hp === 0) {      
-        lose();
+        defendModal.style.transform = "scaleX(0)";
+        setTimeout(lose, 1500);
     } else if (roundNumber === 2){
-        defend();
+        defendModal.style.transform = "scaleX(0)";
+        setTimeout(defend, 1500);
     } else {
+        defendModal.style.transform = "scaleX(0)";
         round = 'attack';
-        attack();
+        setTimeout(attack, 1500);
     }
 }
 
@@ -322,7 +338,7 @@ function win() {
     document.body.style.backgroundColor = "pink";
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(0)";
-    //background = www.images.com/win.png;
+    document.body.style.backgroundImage = "url('../images/WinScreen.png')";
     playAgainModal.style.display = "block";
 }
 
@@ -331,8 +347,8 @@ function lose() {
     document.body.style.backgroundColor = "grey";
     attackModal.style.transform = "scaleX(0)";
     defendModal.style.transform = "scaleX(0)";
-    //background = www.images.com/loss.png;
+    document.body.style.backgroundImage = "url('../images/LoseScreen.png')";
     playAgainModal.style.display = "block";
 }
 
-//mainScreen();
+mainScreen();

@@ -9,19 +9,20 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    height: 100vh;
 }
-
-/* .padding {
-    padding: 0px 5px;
-    max-width: 100%;
-} */
 
 header {
     align-self: center;
 }
 
 h3 {
+    font-size: 30px;
     text-align: center;
+}
+
+p {
+    font-size: 20px;
 }
 nav {
     margin: auto;
@@ -36,8 +37,11 @@ nav li {
 
 nav button {
     border-radius: 15px;
-    width: 80px;
-    height: 30px;
+    width: 250px;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    height: 150px;
 }
 
 ul {
@@ -51,6 +55,7 @@ nav ul{
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    padding-top: 15px;
 }
 
 button {
@@ -61,6 +66,18 @@ button {
 
 footer {
     background-color: green;
+}
+
+#menu {
+    transition: all .5s ease-in-out;
+    transform-origin: top;
+    transform: scaleY(1);
+}
+
+#playerBox{
+    transition: all .5s ease-in-out;
+    transform-origin: left top;
+    transform: scaleX(0);
 }
 
 #block {
@@ -79,6 +96,13 @@ footer {
     font-size: 45px;
     z-index: 2;
     position: absolute;
+    padding-top: 75px;
+}
+
+#cpuBox {
+    transition: all .5s ease-in-out;
+    transform-origin: right top;
+    transform: scaleX(0);
 }
 
 #slap {
@@ -95,6 +119,10 @@ footer {
     display: flex;
     flex-direction: column;
     font-size: 45px;
+    z-index: 3;
+    position: absolute;
+    right: 0;
+    padding-top: 75px;
 }
 
 .moves li{
@@ -108,23 +136,20 @@ button {
     margin-bottom: 15px;
 }
 
-nav button {
-    font-size: 12px;
-    text-align: center;
-    font-weight: bold;
-    height: 40px;
-}
-
 .modal {
-    display: none;
-    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 25%;
     left: 35%;
     z-index: 1;
     width: 30%;
     height: 40%;
     overflow: auto;
-    background-color: rgba(255,255,255,0.8);
-    animation: 1s fadeInOut;
+    background-color: rgba(255,255,255,0.9);
+    animation: 1.5s fadeInOut;
 }
 
 @keyframes fadeInOut {
@@ -133,17 +158,34 @@ nav button {
         color: rgba(0,0,0,0.0)
     }
     to {
-        background-color: rgba(255,255,255,0.8);
+        background-color: rgba(255,255,255,0.9);
         color: rgba(0,0,0,1.0)
     }
 }
 
-.modal-content {
+@keyframes navInOut {
+    from {
+        background: linear-gradient(90deg, rgba(230,229,22,0) 12%, rgba(230,229,22,0) 25%, rgba(230,229,22,0) 50%, rgba(230,229,22,0) 75%, rgba(230,229,22,0) 88%);
+    }
+    to {
+        background: linear-gradient(90deg, rgba(230,229,22,0.8981967787114846) 12%, rgba(230,229,22,0) 25%, rgba(230,229,22,0) 50%, rgba(230,229,22,0) 75%, rgba(230,229,22,1) 88%);
+    }
+}
 
+.modal-content {
     margin: 5% auto;
     padding: 15px;
-    /* width: 80%; */
+    width: 80%;
     animation: 1s fadeInOut;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .close {
@@ -161,26 +203,6 @@ nav button {
     cursor: pointer;
 }
 
-#rulesModal .modal-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    animation: 1s fadeInOut;
-}
-#coinToss .modal-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    animation: 1s fadeInOut;
-}
-
-#playAgainModal .modal-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    animation: 1s fadeInOut;
-}
-
 .health-bar {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -194,7 +216,7 @@ nav button {
 }
 
 .bar {
-    background: #c54;
+    background: rgb(11, 173, 38);
     width: 100%;
     height: 20px;
     position: relative;
@@ -202,36 +224,34 @@ nav button {
 }
 
 .hit {
-    background: rgba(255,255,255,0.6);
+    background: rgba(235, 6, 6, 0.6);
     position: absolute;
     top: 0;
-
     bottom: 0;
     width: 0px;
     transition: width .5s linear;
 }
 
-.healthBars {
+#healthBars {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    background: linear-gradient(90deg, rgba(230,229,22,0.8981967787114846) 12%, rgba(230,229,22,0) 25%, rgba(230,229,22,0) 50%, rgba(230,229,22,0) 75%, rgba(230,229,22,1) 88%);    font: bold;
+    position: absolute;
+    top: 30px;
+    background: linear-gradient(90deg, rgba(230,229,22,0.8981967787114846) 12%, rgba(230,229,22,0) 25%, rgba(230,229,22,0) 50%, rgba(230,229,22,0) 75%, rgba(230,229,22,1) 88%);    
+    font: bold;
     font-size: 20px;
     width: 100%;
-    margin: 0 10px;
+    transition: background 1s linear .5s;
 }
 
 .label {
     font-size: 20px;
     width: 100%;
-    margin: 0 10px;
-    flex-direction: row;
-}
 
-#playerHealth {
-    justify-self: left;
-    order: 4;
+    display: flex;
+    justify-content: space-around;
 }
 
 #playerHealth .bar .hit { 
