@@ -312,7 +312,7 @@ function defendResolve() {
     } else {
         console.log(cpu.move, player.move);
         console.log("Block failed");
-        document.body.style.backgroundImage = "url('../images/DefendFailScreenScreen.png')";
+        document.body.style.backgroundImage = "url('../images/DefendFailScreen.png')";
         player.hp = player.hp - 1;
         healthBars();
     }
